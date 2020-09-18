@@ -90,10 +90,9 @@ for t in range(steps):
     Ey[n_source] -= (mEy[n_source]/dz) * Hsrc[t]
 
     # UPDATE FOURIER TRANSFORMS
-    for f in range(Nfreq):
-        EyR[f] += (K[f]**(t+1)) * Ey[0]
-        EyT[f] += (K[f]**(t+1)) * Ey[Nz-1]
-        SRC[f] += (K[f]**(t+1)) * Esrc[t]
+    EyR[0:Nfreq] += (K[0:Nfreq]**(t+1))*Ey[0]
+    EyT[0:Nfreq] += (K[0:Nfreq]**(t+1))*Ey[Nz-1]
+    SRC[0:Nfreq] += (K[0:Nfreq]**(t+1))*Esrc[t]
 
 # NORMALISE REFLECTANCE AND TRANSMITTANCE
 REF = abs(EyR/SRC)**2
