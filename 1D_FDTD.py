@@ -76,9 +76,7 @@ for t in range(steps):
     h1 = Hx[0]
 
     # UPDATE H FROM E
-    for k in range(Nz):
-        if k < Nz-1:
-            Hx[k] += mHx[k] * (Ey[k+1] - Ey[k])/dz
+    Hx[0:Nz-1] += mHx[0:Nz-1] * (Ey[1:Nz] - Ey[0:Nz-1])/dz
     Hx[Nz-1] += mHx[Nz-1] * (e2 - Ey[Nz-1])/dz
 
     # HANDLE H AT SOURCE POINT
@@ -87,9 +85,8 @@ for t in range(steps):
     e2 = e1
     e1 = Ey[Nz-1]
 
-    for k in range(Nz):
-        if k > 0:
-            Ey[k] += mEy[k] * (Hx[k] - Hx[k-1])/dz
+    # UPDATE E FROM H
+    Ey[1:Nz] += mEy[1:Nz] * (Hx[1:Nz] - Hx[0:Nz-1])/dz
     Ey[0] += mEy[0] * (Hx[0] - h2)/dz
 
     # HANDLE E AT SOURCE POINT
