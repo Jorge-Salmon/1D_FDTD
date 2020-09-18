@@ -50,10 +50,7 @@ Hsrc = A[1]*np.exp(-((time-t0+delt)/tau)**2)
 # INITIALISE FOURIER TRANSFORMS
 Nfreq = 100
 freq = np.array(np.linspace(0, int(fmax), Nfreq))
-
-# INITIALISE KERNELS
 K = np.exp(-1j*2*pi*dt*freq)
-
 EyR = np.zeros(Nfreq, dtype=complex)
 EyT = np.zeros(Nfreq, dtype=complex)
 SRC = np.zeros(Nfreq, dtype=complex)
