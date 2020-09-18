@@ -6,11 +6,11 @@ import matplotlib.pyplot as plt
 
 # Physical constants (units in meters, seconds)
 c0 = 299792458
-Gigahertz = 1e9
+gigahertz = 1e9
 epsilon = 6.0
 mu = 2.0
 nmax = np.sqrt(mu*epsilon)
-fmax = 1 * Gigahertz
+fmax = 1*gigahertz
 # nbc REFRACTIVE INDEX ABOUT THE TWO BOUNDARIES
 nbc = 1.0
 Nz = 94
@@ -27,7 +27,7 @@ nsrc = np.sqrt(UR*ER)
 
 # INITIALISE FDTD
 # time step
-dt = nbc*dz/(2 * c0)
+dt = nbc*dz/(2*c0)
 # source parameters
 n_source = 2
 tau = 0.5/fmax
@@ -67,7 +67,7 @@ Ey = np.zeros(Nz)
 Hx = np.zeros(Nz)
 
 # INITIALISE BOUNDARY TERMS TO ZERO
-h1, h2, e1, e2 = 0,0,0,0
+h1, h2, e1, e2 = 0, 0, 0, 0
 
 # Main FDTD Loop
 for t in range(steps):
@@ -80,7 +80,7 @@ for t in range(steps):
     Hx[Nz-1] += mHx[Nz-1] * (e2 - Ey[Nz-1])/dz
 
     # HANDLE H AT SOURCE POINT
-    Hx[n_source-1] -= (mHx[n_source-1]/dz)*Esrc[t]
+    Hx[n_source-1] -= (mHx[n_source-1]/dz) * Esrc[t]
 
     e2 = e1
     e1 = Ey[Nz-1]
@@ -90,13 +90,13 @@ for t in range(steps):
     Ey[0] += mEy[0] * (Hx[0] - h2)/dz
 
     # HANDLE E AT SOURCE POINT
-    Ey[n_source] -= (mEy[n_source]/dz)*Hsrc[t]
+    Ey[n_source] -= (mEy[n_source]/dz) * Hsrc[t]
 
     # UPDATE FOURIER TRANSFORMS
     for f in range(Nfreq):
-        EyR[f] += (K[f]**(t+1))*Ey[0]
-        EyT[f] += (K[f]**(t+1))*Ey[Nz-1]
-        SRC[f] += (K[f]**(t+1))*Esrc[t]
+        EyR[f] += (K[f]**(t+1)) * Ey[0]
+        EyT[f] += (K[f]**(t+1)) * Ey[Nz-1]
+        SRC[f] += (K[f]**(t+1)) * Esrc[t]
 
 # NORMALISE REFLECTANCE AND TRANSMITTANCE
 REF = abs(EyR/SRC)**2
@@ -107,6 +107,5 @@ plt.plot(freq, CON)
 plt.plot(freq, REF)
 plt.plot(freq, TRA)
 plt.xlabel('Frequency (Hz)')
-
 plt.grid()
 plt.show()
